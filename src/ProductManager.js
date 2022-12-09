@@ -1,11 +1,11 @@
 import fs from "fs";
 
-class ProductManager {
+export default class ProductManager {
   constructor() {
     this.products = [];
   }
 
-  async addProduct(title, description, price, thumbnail, stock) {
+   async addProduct(title, description, price, thumbnail, stock) {
     try {
       const product = {
         id: this.#getMaxID() + 1,
@@ -19,7 +19,7 @@ class ProductManager {
 
       if (fs.existsSync("Productos.json")) {
         this.#leerProductos;
-      }
+      } 
 
       const productadd = this.#getTitle(title);
       if (productadd) {
@@ -36,7 +36,7 @@ class ProductManager {
       console.log(error);
       throw new Error(error);
     }
-  }
+  } 
 
   async getProducts() {
     await this.#leerProductos();
@@ -99,45 +99,3 @@ class ProductManager {
     this.products = productos;
   }
 }
-
-const productManager = new ProductManager();
-
-productManager.addProduct("Peras", "Peras verdes del arbol", 30, "IMG", 45);
-
-productManager.addProduct(
-  "Manzanas",
-  "Manzanas rojas del arbol",
-  20,
-  "IMG",
-  50
-);
-productManager.addProduct(
-  "Manzanas",
-  "Manzanas rojas del arbol",
-  20,
-  "IMG",
-  50
-);
-
-productManager.addProduct(
-  "Limones",
-  "Limones amarillos del arbol",
-  15,
-  "IMG",
-  80
-);
-
-console.log("------------FUNCION GET PRODUCTS------------");
-console.log(await productManager.getProducts());
-
-console.log("------------FUNCION GET PRODUCTS BY ID------------");
-await productManager.getProductsById(2);
-await productManager.getProductsById(7);
-
-console.log("------------FUNCION UPDATE PRODUCT------------");
-await productManager.updateProduct(1, "arm", "SOPA", 500, "IMG", 2);
-console.log(await productManager.getProducts());
-
-console.log("------------FUNCION REMOVE PRODUCT------------");
-await productManager.removeProduct(3);
-console.log(await productManager.getProducts());
