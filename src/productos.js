@@ -3,9 +3,9 @@ import ProductManager from "./ProductManager.js";
 const productManager = new ProductManager();
 export default productManager
 
-await productManager.addProduct("Peras", "Peras verdes del arbol", 30, "IMG", 45);
+ productManager.addProduct("Peras", "Peras verdes del arbol", 30, "IMG", 45);
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Manzanas",
   "Manzanas rojas del arbol",
   20,
@@ -14,7 +14,7 @@ await productManager.addProduct(
 );
 
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Limones",
   "Limones amarillos del arbol",
   15,
@@ -22,7 +22,7 @@ await productManager.addProduct(
   80
 );
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Sandias",
   "Sandias verdes de la planta",
   50,
@@ -30,7 +30,7 @@ await productManager.addProduct(
   10
 );
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Frutillas",
   "Frutillas rojas de la planta",
   10,
@@ -38,7 +38,7 @@ await productManager.addProduct(
   120
 );
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Durazno",
   "Durazno Naranja del arbol",
   53,
@@ -46,7 +46,7 @@ await productManager.addProduct(
   86
 );
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Uvas",
   "Uvas Violetas de la planta",
   14,
@@ -54,7 +54,7 @@ await productManager.addProduct(
   150
 );
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Bananas",
   "Bananas Amarillas de la planta",
   24,
@@ -62,7 +62,7 @@ await productManager.addProduct(
   90
 );
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Naranjas",
   "Naranjas Naranjas del arbol",
   70,
@@ -70,7 +70,7 @@ await productManager.addProduct(
   50
 );
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Piña",
   "Piña Amarilla de la planta",
   140,
@@ -78,7 +78,7 @@ await productManager.addProduct(
   30
 );
 
-await productManager.addProduct(
+ productManager.addProduct(
   "Manzana Verde",
   "Manzana Verde del arbol",
   22,
@@ -87,16 +87,16 @@ await productManager.addProduct(
 );
 /*
 console.log("------------FUNCION GET PRODUCTS------------");
-console.log(await productManager.getProducts());
+console.log( productManager.getProducts());
 
 console.log("------------FUNCION GET PRODUCTS BY ID------------");
-await productManager.getProductsById(2);
-await productManager.getProductsById(7);
+ productManager.getProductsById(2);
+ productManager.getProductsById(7);
 
 console.log("------------FUNCION UPDATE PRODUCT------------");
-await productManager.updateProduct(1, "arm", "SOPA", 500, "IMG", 2);
-console.log(await productManager.getProducts());
+ productManager.updateProduct(1, "arm", "SOPA", 500, "IMG", 2);
+console.log( productManager.getProducts());
 
 console.log("------------FUNCION REMOVE PRODUCT------------");
-await productManager.removeProduct(3);
-console.log(await productManager.getProducts()); */
+ productManager.removeProduct(3);
+console.log( productManager.getProducts()); */

@@ -3,9 +3,10 @@ import fs from "fs";
 export default class ProductManager {
   constructor() {
     this.products = [];
+    this.path = "./Productos.json";
   }
 
-   async addProduct(title, description, price, thumbnail, stock) {
+  addProduct(title, description, price, thumbnail, stock) {
     try {
       const product = {
         id: this.#getMaxID() + 1,
@@ -15,54 +16,55 @@ export default class ProductManager {
         thumbnail,
         code: this.#getMaxID() + 1,
         stock,
+        status: true,
+        category,
       };
 
       if (fs.existsSync("Productos.json")) {
         this.#leerProductos;
-      } 
+      }
 
       const productadd = this.#getTitle(title);
       if (productadd) {
         console.log(` El producto (${title}) ya se encuentra en el arreglo`);
       } else {
-        if ((title, description, price, thumbnail, stock)) {
+        if ((title, description, price, thumbnail, stock, category)) {
           this.products.push(product);
         } else {
           console.log("Falta ingresar datos");
         }
       }
-      fs.promises.writeFile("Productos.json", JSON.stringify(this.products));
+      fs.promises.writeFile(this.path, JSON.stringify(this.products));
     } catch (error) {
       console.log(error);
       throw new Error(error);
     }
-  } 
+  }
 
-  async getProducts() {
-    await this.#leerProductos();
+  getProducts() {
+    this.#leerProductos();
     return this.products;
   }
 
-  async getProductsById(idProduct) {
-    await this.#leerProductos();
+  getProductsById(idProduct) {
+    this.#leerProductos();
     const product = this.#getId(idProduct);
     if (product) {
       console.log(product);
-      return product
+      return product;
     } else {
       console.log("Not Found");
     }
   }
 
-  async removeProduct(idProduct) {
-    let newCart = this.products.filter(producto => producto.id !== idProduct)
-    this.products = newCart
-    fs.promises.writeFile("Productos.json", JSON.stringify(this.products))
-    
+  removeProduct(idProduct) {
+    let newCart = this.products.filter((producto) => producto.id !== idProduct);
+    this.products = newCart;
+    fs.promises.writeFile("Productos.json", JSON.stringify(this.products));
   }
 
-  async updateProduct(idProduct, title, description, price, thumbnail, stock) {
-    await this.#leerProductos();
+  updateProduct(idProduct, title, description, price, thumbnail, stock) {
+    this.#leerProductos();
     const product = this.#getId(idProduct);
     const newProduct = {
       title,
@@ -70,12 +72,14 @@ export default class ProductManager {
       price,
       thumbnail,
       stock,
+      category,
     };
     product.title = newProduct.title;
     product.description = newProduct.description;
     product.price = newProduct.price;
     product.thumbnail = newProduct.thumbnail;
     product.stock = newProduct.stock;
+    product.category = newProduct.category;
     fs.promises.writeFile("Productos.json", JSON.stringify(this.products));
   }
 
@@ -87,8 +91,8 @@ export default class ProductManager {
     return maxId;
   }
   #getId(idProduct) {
-    const product1 = this.products.find((product1) => product1.id == idProduct)
-    return product1
+    const product1 = this.products.find((product1) => product1.id == idProduct);
+    return product1;
   }
 
   #getTitle(titleProduct) {
@@ -100,5 +104,6 @@ export default class ProductManager {
       await fs.promises.readFile("Productos.json", "utf-8")
     );
     this.products = productos;
-  } 
+    return this.products;
+  }
 }
