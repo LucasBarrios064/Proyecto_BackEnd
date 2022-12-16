@@ -48,6 +48,7 @@ export default class ProductManager {
     const product = this.#getId(idProduct);
     if (product) {
       console.log(product);
+      return product
     } else {
       console.log("Not Found");
     }
@@ -57,6 +58,7 @@ export default class ProductManager {
     let newCart = this.products.filter(producto => producto.id !== idProduct)
     this.products = newCart
     fs.promises.writeFile("Productos.json", JSON.stringify(this.products))
+    
   }
 
   async updateProduct(idProduct, title, description, price, thumbnail, stock) {
@@ -85,7 +87,8 @@ export default class ProductManager {
     return maxId;
   }
   #getId(idProduct) {
-    return this.products.find((product) => product.id === idProduct);
+    const product1 = this.products.find((product1) => product1.id == idProduct)
+    return product1
   }
 
   #getTitle(titleProduct) {
@@ -97,5 +100,5 @@ export default class ProductManager {
       await fs.promises.readFile("Productos.json", "utf-8")
     );
     this.products = productos;
-  }
+  } 
 }

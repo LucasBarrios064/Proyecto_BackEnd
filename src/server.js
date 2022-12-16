@@ -1,46 +1,34 @@
 import express from "express";
 import productManager from "./productos.js";
-
+import ProductManager from "./ProductManager.js";
 const app = express();
 let productosMuestra = [];
 
 productosMuestra = productManager.products;
 
-const PORT = 8080;
+const productManager2 = new ProductManager();
+productManager2.getProducts()
+
+const PORT = 8081;
 
 app.listen(PORT, () => {
   console.log(`🔥 LISTENING ON PORT ${PORT}!`);
-});
-
-/* app.get("/saludo", (req, res) => {
-  res.send("Hola coderhouse desde express");
-});
-
-app.get("/bienvenida", (req, res) => {
-  res.send('<h1 style="color:blue">Bienvenido!</h1>');
 }); 
 
- app.get("/products", (req, res) => {
-  res.json({
-    productosMuestra,
-  });
-}); */
-
-app.get("/products/:pid", (req, res) => {
+await app.get("/products/:pid", (req, res) => {
   console.log(req);
   const { pid } = req.params;
   console.log(pid);
-  const product1 = productosMuestra.find((product1) => product1.id == pid);
-  if (product1){
-    res.json(product1);
-  }else{
-    res.send('<h1 style="color:red">El producto no existe</h1>')
-  }
+  const productID = productManager2.getProductsById(pid)
+  console.log(productID)
+  res.json(productID)
 });
 
-app.get("/products", (req, res) => {
+ app.get("/products", (req, res) => {
   const { limit } = req.query;
   console.log(limit);
-  const producto = productosMuestra.slice(0, limit);
+  const productList = productManager2.products
+  const producto = productList.slice(0, limit);
+  console.log(productList)
   res.json(producto);
 });
