@@ -6,7 +6,7 @@ export default class ProductManager {
     this.path = "./Productos.json";
   }
 
-  addProduct(title, description, price, thumbnail, stock) {
+  addProduct(title, description, price, thumbnail, stock, category) {
     try {
       const product = {
         id: this.#getMaxID() + 1,
@@ -21,10 +21,10 @@ export default class ProductManager {
       };
 
       if (fs.existsSync("Productos.json")) {
-        this.#leerProductos;
+        this.#leerProductos();
       }
 
-      const productadd = this.#getTitle(title);
+      let productadd = this.#getTitle(title);
       if (productadd) {
         console.log(` El producto (${title}) ya se encuentra en el arreglo`);
       } else {
@@ -34,7 +34,7 @@ export default class ProductManager {
           console.log("Falta ingresar datos");
         }
       }
-      fs.promises.writeFile(this.path, JSON.stringify(this.products));
+      fs.writeFileSync(this.path, JSON.stringify(this.products, "utf-8"));
     } catch (error) {
       console.log(error);
       throw new Error(error);
@@ -60,13 +60,21 @@ export default class ProductManager {
   removeProduct(idProduct) {
     let newCart = this.products.filter((producto) => producto.id !== idProduct);
     this.products = newCart;
-    fs.promises.writeFile("Productos.json", JSON.stringify(this.products));
+    fs.promises.writeFile("Productos.json", JSON.stringify(this.products), "utf-8");
   }
 
-  updateProduct(idProduct, title, description, price, thumbnail, stock) {
+  updateProduct(
+    idProduct,
+    title,
+    description,
+    price,
+    thumbnail,
+    stock,
+    category
+  ) {
     this.#leerProductos();
-    const product = this.#getId(idProduct);
-    const newProduct = {
+
+    let newProduct = {
       title,
       description,
       price,
@@ -74,13 +82,20 @@ export default class ProductManager {
       stock,
       category,
     };
-    product.title = newProduct.title;
-    product.description = newProduct.description;
-    product.price = newProduct.price;
-    product.thumbnail = newProduct.thumbnail;
-    product.stock = newProduct.stock;
-    product.category = newProduct.category;
-    fs.promises.writeFile("Productos.json", JSON.stringify(this.products));
+
+    this.products.find((product) => {
+      if (product.id === idProduct) {
+        product.title = newProduct.title;
+        product.description = newProduct.description;
+        product.price = newProduct.price
+        product.thumbnail = newProduct.thumbnail;
+        product.stock = newProduct.stock;
+        product.category = newProduct.category;
+      }
+      fs.promises.writeFile(this.path, JSON.stringify(this.products));
+    });
+
+    
   }
 
   #getMaxID() {

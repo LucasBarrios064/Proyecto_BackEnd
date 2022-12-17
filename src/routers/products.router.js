@@ -5,7 +5,7 @@ const productsRouter = Router();
 
 const productManager2 = new ProductManager();
 
-productsRouter.get("/products", (req, res) => {
+productsRouter.get("/", (req, res) => {
   const { limit } = req.query;
   let productsList = productManager2.getProducts();
   if (limit) {
@@ -16,7 +16,7 @@ productsRouter.get("/products", (req, res) => {
   }
 });
 
-productsRouter.get("/products/:pid", (req, res) => {
+productsRouter.get("/:pid", (req, res) => {
   const { pid } = req.params;
   const id = parseInt(pid);
   let productID = productManager2.getProductsById(id);
@@ -25,19 +25,18 @@ productsRouter.get("/products/:pid", (req, res) => {
 
 productsRouter.post("/", (res, req) => {
   let newData = req.body;
-  console.log(req.body);
-
+  console.log(newData);
+  
   productManager2.addProduct(
     newData.title,
     newData.description,
-    newData.code,
     newData.price,
-    newData.status,
     newData.stock,
     newData.category,
     newData.thumbnail
-  );
-  res.status(201).json("Producto Añadido");
+  ) 
+
+  res.status(201).json("Producto Añadido"); 
 });
 
 productsRouter.put("/:pid", (req, res) => {
@@ -45,13 +44,12 @@ productsRouter.put("/:pid", (req, res) => {
   const id = parseInt(pid);
 
   let newData = req.body;
+  console.log(req.body)
   productManager2.updateProduct(
     id,
     newData.title,
     newData.description,
-    newData.code,
     newData.price,
-    newData.status,
     newData.stock,
     newData.category,
     newData.thumbnail

@@ -1,90 +1,107 @@
 import ProductManager from "./ProductManager.js";
 
 const productManager = new ProductManager();
-export default productManager
+export default productManager;
 
- productManager.addProduct("Peras", "Peras verdes del arbol", 30, "IMG", 45);
+productManager.addProduct(
+  "Peras",
+  "Peras verdes del arbol",
+  30,
+  "IMG",
+  45,
+  "fruta"
+);
 
- productManager.addProduct(
+productManager.addProduct(
   "Manzanas",
   "Manzanas rojas del arbol",
   20,
   "IMG",
-  50
+  50,
+  "fruta"
 );
 
-
- productManager.addProduct(
+productManager.addProduct(
   "Limones",
   "Limones amarillos del arbol",
   15,
   "IMG",
-  80
+  80,
+  "fruta"
 );
 
- productManager.addProduct(
+productManager.addProduct(
   "Sandias",
   "Sandias verdes de la planta",
   50,
   "IMG",
-  10
+  10,
+  "fruta"
 );
 
- productManager.addProduct(
+productManager.addProduct(
   "Frutillas",
   "Frutillas rojas de la planta",
   10,
   "IMG",
-  120
+  120,
+  "fruta"
 );
 
- productManager.addProduct(
+productManager.addProduct(
   "Durazno",
   "Durazno Naranja del arbol",
   53,
   "IMG",
-  86
+  86,
+  "fruta"
 );
 
- productManager.addProduct(
+productManager.addProduct(
   "Uvas",
   "Uvas Violetas de la planta",
   14,
   "IMG",
-  150
+  150,
+  "fruta"
 );
 
- productManager.addProduct(
+productManager.addProduct(
   "Bananas",
   "Bananas Amarillas de la planta",
   24,
   "IMG",
-  90
+  90,
+  "fruta"
 );
 
- productManager.addProduct(
+productManager.addProduct(
   "Naranjas",
   "Naranjas Naranjas del arbol",
   70,
   "IMG",
-  50
+  50,
+  "fruta"
 );
 
- productManager.addProduct(
+productManager.addProduct(
   "Piña",
   "Piña Amarilla de la planta",
   140,
   "IMG",
-  30
+  30,
+  "fruta"
 );
 
- productManager.addProduct(
+productManager.addProduct(
   "Manzana Verde",
   "Manzana Verde del arbol",
   22,
   "IMG",
-  60
+  60,
+  "fruta"
 );
+
 /*
 console.log("------------FUNCION GET PRODUCTS------------");
 console.log( productManager.getProducts());
