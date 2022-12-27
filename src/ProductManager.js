@@ -42,25 +42,35 @@ export default class ProductManager {
   }
 
   getProducts() {
-    this.#leerProductos();
-    return this.products;
+    try {
+      this.#leerProductos();
+      return this.products;
+    } catch {
+      console.log(error);
+      throw new Error(error);
+    }
   }
 
   getProductsById(idProduct) {
-    this.#leerProductos();
-    const product = this.#getId(idProduct);
-    if (product) {
-      console.log(product);
-      return product;
-    } else {
-      console.log("Not Found");
+    try {
+      this.#leerProductos();
+      const product = this.#getId(idProduct);
+      if (product) {
+        console.log(product);
+        return product;
+      } else {
+        console.log("Not Found");
+      }
+    } catch {
+      console.log(error);
+      throw new Error(error);
     }
   }
 
   removeProduct(idProduct) {
     let newCart = this.products.filter((producto) => producto.id !== idProduct);
     this.products = newCart;
-    fs.promises.writeFile("Productos.json", JSON.stringify(this.products), "utf-8");
+    fs.promises.writeFile(this.path, JSON.stringify(this.products));
   }
 
   updateProduct(
@@ -87,15 +97,13 @@ export default class ProductManager {
       if (product.id === idProduct) {
         product.title = newProduct.title;
         product.description = newProduct.description;
-        product.price = newProduct.price
+        product.price = newProduct.price;
         product.thumbnail = newProduct.thumbnail;
         product.stock = newProduct.stock;
         product.category = newProduct.category;
       }
       fs.promises.writeFile(this.path, JSON.stringify(this.products));
     });
-
-    
   }
 
   #getMaxID() {
@@ -116,7 +124,7 @@ export default class ProductManager {
 
   async #leerProductos() {
     const productos = JSON.parse(
-      await fs.promises.readFile("Productos.json", "utf-8")
+      await fs.promises.readFile(this.path, "utf-8")
     );
     this.products = productos;
     return this.products;

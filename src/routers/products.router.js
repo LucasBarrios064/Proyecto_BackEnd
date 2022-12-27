@@ -3,7 +3,7 @@ import ProductManager from "../ProductManager.js";
 
 const productsRouter = Router();
 
-const productManager2 = new ProductManager();
+export const productManager2 = new ProductManager();
 
 productsRouter.get("/", (req, res) => {
   const { limit } = req.query;
@@ -23,28 +23,28 @@ productsRouter.get("/:pid", (req, res) => {
   res.json(productID);
 });
 
-productsRouter.post("/", (res, req) => {
-  let newData = req.body;
+productsRouter.post("/", async (req, res) => {
+  const newData = req.body;
+  console.log(req.body);
   console.log(newData);
-  
-  productManager2.addProduct(
+  await productManager2.addProduct(
     newData.title,
     newData.description,
     newData.price,
     newData.stock,
     newData.category,
     newData.thumbnail
-  ) 
+  );
 
-  res.status(201).json("Producto Añadido"); 
+  res.status(201).json("Producto Añadido");
 });
 
 productsRouter.put("/:pid", (req, res) => {
   const { pid } = req.params;
   const id = parseInt(pid);
-
-  let newData = req.body;
-  console.log(req.body)
+  const { body } = req;
+  let newData = body;
+  console.log(req.body);
   productManager2.updateProduct(
     id,
     newData.title,
@@ -54,7 +54,7 @@ productsRouter.put("/:pid", (req, res) => {
     newData.category,
     newData.thumbnail
   );
-  res.status(201).json("Producto actualizado");
+  res.status(201).json(newData);
 });
 
 productsRouter.delete("/:pid", (req, res) => {
