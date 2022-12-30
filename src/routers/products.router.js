@@ -27,7 +27,7 @@ productsRouter.post("/", async (req, res) => {
   const newData = req.body;
   console.log(req.body);
   console.log(newData);
-  await productManager2.addProduct(
+  productManager2.addProduct(
     newData.title,
     newData.description,
     newData.price,

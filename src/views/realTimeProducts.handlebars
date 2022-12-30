@@ -1,7 +1,7 @@
 <div>
   <h1>Lista de los Productos</h1>
   <div>
-    <ul>
+    <ul id="list-products">
       {{#each productosRender}}
         <li>
           <h3>{{this.title}}</h3>
@@ -17,3 +17,6 @@
       </ul>
   </div>
 </div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/socket.js"></script>

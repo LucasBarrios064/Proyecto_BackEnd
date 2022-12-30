@@ -1,16 +1,20 @@
 import { Router } from "express";
  import ProductManager from "../ProductManager.js";
 
-const productManager = new ProductManager() 
+const productManager3 = new ProductManager() 
 
-const router = Router();
+const viewsRouter = Router();
 
-router.get("/", (req, res) => {
-  let productsList = productManager.getProducts()
-  console.log("views router esta funcionando")
-    let productosRender = productsList;
-    console.log(productosRender) 
-  res.render("home");
+viewsRouter.get("/", (req, res) => {
+  let productsList = productManager3.getProducts()
+  let productosRender = productsList;
+  res.render("home",{productosRender});
 });
 
-export default router;
+viewsRouter.get("/realtimeproducts", (req, res) => {
+  let productsList = productManager3.getProducts()
+  let productosRender = productsList;
+  res.render("realTimeProducts",{productosRender});
+});
+
+export default viewsRouter;
