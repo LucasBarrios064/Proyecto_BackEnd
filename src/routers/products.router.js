@@ -1,4 +1,28 @@
 import { Router } from "express";
+import * as ProductController from "../controllers/products.controllers.js"
+
+const productsRouter = Router()
+
+
+productsRouter.get("/", ProductController.getProducts)
+
+
+productsRouter.get("/:idProduct", ProductController.getProductById)
+
+
+productsRouter.post("/", ProductController.addProduct)
+
+productsRouter.put("/:idProduct", ProductController.updateProduct)
+
+productsRouter.delete("/:idProduct", ProductController.deleteProduct)
+
+
+export { productsRouter }
+
+
+
+
+/* import { Router } from "express";
 import ProductManager from "../ProductManager.js";
 
 const productsRouter = Router();
@@ -64,4 +88,4 @@ productsRouter.delete("/:pid", (req, res) => {
   res.json("Producto eliminado");
 });
 
-export default productsRouter;
+export default productsRouter; */
