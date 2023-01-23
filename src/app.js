@@ -1,12 +1,11 @@
 import express from "express";
 import {productsRouter} from "./routers/products.router.js";
-/* import cartsRouter from "./routers/cart.router.js"; */
+import {cartsRouter} from "./routers/cart.router.js"; 
 import { engine } from "express-handlebars";
 /* import viewsRouter from "./routers/views.router.js"; */
 import { Server } from "socket.io";
 import __dirname from './utils.js';
 
-import * as ProductServices from "./services/products.services.js";
 import dotenv from "dotenv";
 import "./config/db.js"
 
@@ -26,8 +25,8 @@ const server = app.listen(PORT, () =>
 server.on("error", (err) => console.log(err));
 
 app.use("/api/products/", productsRouter);
-/* app.use("/api/carts/", cartsRouter); 
-app.use("/", viewsRouter);*/
+app.use("/api/carts/", cartsRouter); 
+/* app.use("/", viewsRouter); */
 
 const socketServer = new Server(server);
 

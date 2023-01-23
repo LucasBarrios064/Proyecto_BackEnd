@@ -1,4 +1,24 @@
 import { Router } from "express";
+import * as CartController from "../controllers/carts.controllers.js"
+
+const cartsRouter = Router();
+
+cartsRouter.get("/", CartController.getCart)
+
+cartsRouter.get("/:idCart",CartController.getCartById)
+
+cartsRouter.post("/",CartController.addCart)
+
+cartsRouter.put("/:idCart",CartController.updateCart)
+
+cartsRouter.delete("/:idCart",CartController.deleteCart)
+
+export { cartsRouter }
+
+
+
+
+/* import { Router } from "express";
 import { CartManager } from "../CartManager.js";
 
 const cartsRouter = Router();
@@ -54,3 +74,4 @@ cartsRouter.get("/:cid", (req, res) => {
 });
 
 export default cartsRouter ;
+ */
