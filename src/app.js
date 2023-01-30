@@ -2,12 +2,13 @@ import express from "express";
 import {productsRouter} from "./routers/products.router.js";
 import {cartsRouter} from "./routers/cart.router.js"; 
 import { engine } from "express-handlebars";
-/* import viewsRouter from "./routers/views.router.js"; */
+import viewsRouter from "./routers/views.router.js"; 
 import { Server } from "socket.io";
 import __dirname from './utils.js';
 
 import dotenv from "dotenv";
 import "./config/db.js"
+import * as MessageServices from "./services/messages.services.js"
 
 const app = express();
 dotenv.config()
@@ -26,7 +27,7 @@ server.on("error", (err) => console.log(err));
 
 app.use("/api/products/", productsRouter);
 app.use("/api/carts/", cartsRouter); 
-/* app.use("/", viewsRouter); */
+app.use("/", viewsRouter);
 
 const socketServer = new Server(server);
 
@@ -36,4 +37,16 @@ socketServer.on("connection", (socket) => {
     console.log("Cliente desconectado");
     
   });
+
+  async function conseguirMensajes(){
+    let messages = await MessageServices.getMessages()
+    socketServer.emit("ServerSendMessages", messages)
+  }
+  conseguirMensajes()
+
+  socket.on("addMessage", newMessage=>{
+    MessageServices.addMessages(newMessage)
+    conseguirMensajes()
+  })
+  
 });

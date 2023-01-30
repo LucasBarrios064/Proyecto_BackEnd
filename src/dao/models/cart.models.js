@@ -1,16 +1,30 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import MongooseDelete from "mongoose-delete";
 
 const schema = mongoose.Schema(
   {
-    products: {
-      type: Array,
-      require: true,
-    },
+    cart: [
+      {
+        product: {
+          type: Schema.Types.ObjectId,
+          ref: "Products",
+          default: [],
+        },
+        quantity: {
+          type: Number,
+          default: 1,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
 
+schema.pre(/^find/, function (next) {
+  this.populate("cart.product");
+  next();
+});
+
 schema.plugin(MongooseDelete, { deletedAt: true });
 
-export const CartModel = mongoose.model("carts", schema);
+export const CartModel = mongoose.model("Carts", schema);

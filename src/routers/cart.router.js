@@ -2,16 +2,10 @@ import { Router } from "express";
 import * as CartController from "../controllers/carts.controllers.js"
 
 const cartsRouter = Router();
-
 cartsRouter.get("/", CartController.getCart)
-
 cartsRouter.get("/:idCart",CartController.getCartById)
-
 cartsRouter.post("/",CartController.addCart)
-
-cartsRouter.put("/:idCart",CartController.updateCart)
-
-cartsRouter.delete("/:idCart",CartController.deleteCart)
+cartsRouter.post("/:idCart",CartController.updateCart)
 
 export { cartsRouter }
 

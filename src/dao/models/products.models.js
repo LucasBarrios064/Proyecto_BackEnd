@@ -43,4 +43,4 @@ const schema = mongoose.Schema(
 
 schema.plugin(MongooseDelete, { deletedAt: true });
 
-export const productModel = mongoose.model("products", schema);
+export const productModel = mongoose.model("Products", schema);
