@@ -5,7 +5,10 @@ const cartsRouter = Router();
 cartsRouter.get("/", CartController.getCart)
 cartsRouter.get("/:idCart",CartController.getCartById)
 cartsRouter.post("/",CartController.addCart)
-cartsRouter.post("/:idCart",CartController.updateCart)
+cartsRouter.post('/:cartID/product/:productID/:quantity', CartController.addProductToCart)
+cartsRouter.delete("/:idCart",CartController.deleteCartProducts)
+cartsRouter.put('/:cartID/', CartController.updateCart)
+cartsRouter.put('/:cartID/product/:productID', CartController.updateQuantity)
 
 export { cartsRouter }
 

@@ -1,8 +1,10 @@
 import { Router } from "express";
+import { STATUS } from "../constants/constants.js";
+import * as ProductServices from "../services/products.services.js"
 /* import ProductManager from "../ProductManager.js"; 
 
-const productManager3 = new ProductManager() 
-*/
+const productManager3 = new ProductManager()  */
+
 
 /*
  viewsRouter.get("/", (req, res) => {
@@ -10,13 +12,40 @@ const productManager3 = new ProductManager()
   let productosRender = productsList;
   res.render("home",{productosRender});
 });
-
-viewsRouter.get("/realtimeproducts", (req, res) => {
-  let productsList = productManager3.getProducts()
-  let productosRender = productsList;
-  res.render("realTimeProducts",{productosRender});
-}); */
+*/
 const viewsRouter = Router();
+
+viewsRouter.get("/realtimeproducts", async (req, res) => {
+  const {limit,page} = req.query
+    
+  let limitQuery = parseInt(limit)
+  let pageQuery = parseInt(page)
+  
+  if(!limit){limitQuery=10}
+  if(!page){pageQuery=1}
+  
+  let options = {
+      page: pageQuery,
+      limit: limitQuery,
+      lean: true
+  }
+  try {
+      console.log(options.page, options.limit)
+      const response = await ProductServices.getProducts(options)
+      console.log("response: ", response)
+      
+      res.render("realTimeProducts", { ...response });
+      
+  } catch (error) {
+      res.status(400).json({
+          error: error.message,
+          status: STATUS.FAIL
+      })
+  }
+  
+})
+
+
 viewsRouter.get("/chat", (req, res) => {
   console.log("views router esta funcionando");
 
@@ -24,3 +53,4 @@ viewsRouter.get("/chat", (req, res) => {
 });
 
 export default viewsRouter;
+

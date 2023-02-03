@@ -23,3 +23,26 @@ const updateList = (list) => {
         listProducts.appendChild(newProduct)
     });
 }
+
+socket.on("ServerSendProducts", (enviarProducto)=>{
+    let productos = enviarProducto
+    console.log("Productos recibidos del server: ", productos)
+    productosRenderDiv.innerHTML = ""
+    productos.docs.forEach(productos => {
+        let productoUl = document.createElement("ul")
+        productoUl.innerHTML = 
+        `${productos.title}
+            <li>Id: ${productos._id}</li>
+            <li>Description: ${productos.description}</li>
+            <li>Code: ${productos.code}</li>
+            <li>Price: $${productos.price}</li>
+            <li>Status: ${productos.status}</li>
+            <li>Stock: ${productos.stock}</li>
+            <li>Category: ${productos.category}</li>
+            <li>Thumbnail: ${productos.thumbnail}</li>
+            <button>Add to cart</button>
+        `
+        productosRenderDiv.appendChild(productoUl)
+    });
+    
+})

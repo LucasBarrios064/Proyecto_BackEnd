@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import MongooseDelete from "mongoose-delete";
+import mongoosePaginate from "mongoose-paginate-v2";
 
 const schema = mongoose.Schema(
   {
@@ -41,6 +42,7 @@ const schema = mongoose.Schema(
   { timestamps: true }
 );
 
-schema.plugin(MongooseDelete, { deletedAt: true });
+schema.plugin(MongooseDelete, {deletedAt:true})
+schema.plugin(mongoosePaginate)
 
 export const productModel = mongoose.model("Products", schema);

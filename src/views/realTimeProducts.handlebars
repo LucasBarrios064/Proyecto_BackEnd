@@ -2,7 +2,7 @@
   <h1>Lista de los Productos</h1>
   <div>
     <ul id="list-products">
-      {{#each productosRender}}
+      {{#each docs}}
         <li>
           <h3>{{this.title}}</h3>
           <p>Id: {{this.id}} </p>
@@ -14,8 +14,15 @@
           <p>Thumbnail: {{this.thumbnail}} </p>
         </li>
       {{/each}}
-      </ul>
+    </ul>
   </div>
+  {{#if prevPage}}
+    <a href="/realtimeproducts/?limit={{limit}}&page={{prevPage}}">Anterior</a>
+  {{/if}}
+  {{page}}
+  {{#if nextPage}}
+    <a href="?limit={{limit}}&page={{nextPage}}">Siguiente</a>
+  {{/if}}
 </div>
 
 <script src="/socket.io/socket.io.js"></script>

@@ -2,7 +2,7 @@
   <h1>Lista de los Productos</h1>
   <div>
     <ul>
-      {{#each productosRender}}
+      {{#each docs}}
         <li>
           <h3>{{this.title}}</h3>
           <p>Id: {{this.id}} </p>
@@ -16,4 +16,11 @@
       {{/each}}
       </ul>
   </div>
+  {{#if prevPage}}
+  <a href="/pagination?page={{prevPage}}">Anterior</a>
+{{/if}}
+{{page}}
+{{#if nextPage}}
+  <a href="/pagination?page={{nextPage}}">Siguiente</a>
+{{/if}}
 </div>

@@ -1,9 +1,9 @@
 import { productModel } from "../dao/models/products.models.js";
 
-export async function getProducts() {
+export async function getProducts(options) {
   try {
-    const product = await productModel.find({ deletedAt: { $exists: false } });
-    return product;
+        const products =  await productModel.paginate({deleted:false}, options)
+        return products
   } catch (error) {
     throw new Error(error.message);
   }

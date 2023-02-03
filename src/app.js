@@ -9,6 +9,8 @@ import __dirname from './utils.js';
 import dotenv from "dotenv";
 import "./config/db.js"
 import * as MessageServices from "./services/messages.services.js"
+import * as ProductServices from "./services/products.services.js";
+import * as CartServices from "./services/carts.services.js";
 
 const app = express();
 dotenv.config()
@@ -38,11 +40,17 @@ socketServer.on("connection", (socket) => {
     
   });
 
+   async function conseguirProductos(){
+    let products = await ProductServices.getProducts()
+    socketServer.emit("ServerSendProducts", products)
+  }
+  conseguirProductos()
+
   async function conseguirMensajes(){
     let messages = await MessageServices.getMessages()
     socketServer.emit("ServerSendMessages", messages)
   }
-  conseguirMensajes()
+  conseguirMensajes() 
 
   socket.on("addMessage", newMessage=>{
     MessageServices.addMessages(newMessage)

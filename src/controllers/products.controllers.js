@@ -2,12 +2,32 @@ import * as ProductServices from "../services/products.services.js"
 import {STATUS} from "../constants/constants.js"
 
 export async function getProducts(req, res){
+    const {limit,page} = req.query
+    
+    
+    let limitQuery = parseInt(limit)
+    let pageQuery = parseInt(page)
+
+    
+    if(!limit){limitQuery=10}
+    if(!page){pageQuery=1}
+    
+    let options = {
+        page: pageQuery,
+        limit: limitQuery,
+        lean: true
+    }
+    
     try {
-        const response = await ProductServices.getProducts()
+        console.log(options.page, options.limit)
+        const response = await ProductServices.getProducts(options)
+       
         res.json({
             products: response,
             status: STATUS.SUCCES
-        })
+        });
+        
+
     } catch (error) {
         res.status(400).json({
             error: error.message,
