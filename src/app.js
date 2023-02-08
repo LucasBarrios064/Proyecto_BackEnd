@@ -1,35 +1,75 @@
 import express from "express";
-import {productsRouter} from "./routers/products.router.js";
-import {cartsRouter} from "./routers/cart.router.js"; 
-import { engine } from "express-handlebars";
-import viewsRouter from "./routers/views.router.js"; 
+import handlebars from 'express-handlebars';
 import { Server } from "socket.io";
 import __dirname from './utils.js';
+
+import {productsRouter} from "./routers/products.router.js";
+import {cartsRouter} from "./routers/cart.router.js"; 
+import viewsRouter from "./routers/views.router.js"; 
+import userRouter from './routers/users.router.js';
+import authRouter from './routers/auth.router.js';
+
+import cookie from "cookie-parser"
+import session from 'express-session';
+import mongoStore from "connect-mongo";
 
 import dotenv from "dotenv";
 import "./config/db.js"
 import * as MessageServices from "./services/messages.services.js"
 import * as ProductServices from "./services/products.services.js";
-import * as CartServices from "./services/carts.services.js";
+
 
 const app = express();
 dotenv.config()
+
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("src/public"));
-app.engine("handlebars", engine());
+
+
+app.use(cookie())
+app.use(session({
+  store: new mongoStore({
+    mongoUrl: process.env.MONGO_URI,
+    options: {
+      userNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  }),
+  secret: process.env.SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 600000  }, 
+
+}))
+
+
+
+app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", __dirname + "/views");
 
-const PORT = 8080;
-const server = app.listen(PORT, () =>
-  console.log(`🚀 Server started on port http://localhost:${PORT}`)
-);
-server.on("error", (err) => console.log(err));
+
 
 app.use("/api/products/", productsRouter);
 app.use("/api/carts/", cartsRouter); 
-app.use("/", viewsRouter);
+app.use("/views/", viewsRouter);
+
+app.use("/api/users/", userRouter)
+app.use("/api/auth/", authRouter)
+
+
+
+const PORT = process.env.PORT || 8080
+const server = app.listen(PORT, () => console.log(`🚀 Server started on port http://localhost:${PORT}`))
+server.on('error', (err) => console.log(err));
+
+
+
+
+
 
 const socketServer = new Server(server);
 

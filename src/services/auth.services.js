@@ -1,0 +1,16 @@
+import * as UserServices from "../services/users.services.js";
+
+export async function login(email, password){
+  try {
+      const user = await UserServices.getUser(email)
+      if(!user){
+          throw new Error("El usuario no existe")
+      } else{
+          if(password === user.password){
+              return true
+          }else { return false }
+      }
+  } catch (error) {
+      throw new Error(error.message);
+  }
+}

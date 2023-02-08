@@ -5,6 +5,7 @@ socket.on("listChange", (data) => {
 })
 
 const listProducts = document.getElementById("list-products");
+const productosRenderDiv = document.getElementById("productosRenderDiv")
 
 const updateList = (list) => {
     listProducts.innerHTML = "";
@@ -26,7 +27,6 @@ const updateList = (list) => {
 
 socket.on("ServerSendProducts", (enviarProducto)=>{
     let productos = enviarProducto
-    console.log("Productos recibidos del server: ", productos)
     productosRenderDiv.innerHTML = ""
     productos.docs.forEach(productos => {
         let productoUl = document.createElement("ul")

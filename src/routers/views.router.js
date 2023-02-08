@@ -15,8 +15,18 @@ const productManager3 = new ProductManager()  */
 */
 const viewsRouter = Router();
 
+viewsRouter.get("/", (req,res)=>{
+  res.render("login")
+})
+
+viewsRouter.get("/register", (req,res)=>{
+  res.render("register")
+})
+
+
 viewsRouter.get("/realtimeproducts", async (req, res) => {
   const {limit,page} = req.query
+  const userLogged = req.session.userLogged
     
   let limitQuery = parseInt(limit)
   let pageQuery = parseInt(page)
@@ -32,9 +42,8 @@ viewsRouter.get("/realtimeproducts", async (req, res) => {
   try {
       console.log(options.page, options.limit)
       const response = await ProductServices.getProducts(options)
-      console.log("response: ", response)
       
-      res.render("realTimeProducts", { ...response });
+      res.render("realTimeProducts", {userLogged, ...response });
       
   } catch (error) {
       res.status(400).json({

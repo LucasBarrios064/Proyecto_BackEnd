@@ -1,4 +1,20 @@
 <div>
+    <div>
+        <form action="/api/auth/logout" method="get" id="form-logout">
+            <button form="form-logout">Log out</button>
+        </form>
+    </div>
+
+
+    <div>
+        <h2>Bienvenido {{userLogged.first_name}}</h2>
+        <p>{{userLogged.email}} </p>
+        <p>{{userLogged.role}} </p>
+        
+    </div>
+
+
+<div>
   <h1>Lista de los Productos</h1>
   <div>
     <ul id="list-products">
