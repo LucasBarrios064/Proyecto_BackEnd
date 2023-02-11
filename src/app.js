@@ -8,10 +8,13 @@ import {cartsRouter} from "./routers/cart.router.js";
 import viewsRouter from "./routers/views.router.js"; 
 import userRouter from './routers/users.router.js';
 import authRouter from './routers/auth.router.js';
+import PassportLocalRouter from './routers/passportLocal.router.js'
+import GithubRouter from './routers/github.router.js'
 
 import cookie from "cookie-parser"
 import session from 'express-session';
 import mongoStore from "connect-mongo";
+import passport from 'passport';
 
 import dotenv from "dotenv";
 import "./config/db.js"
@@ -24,12 +27,15 @@ dotenv.config()
 
 
 
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("src/public"));
 
 
 app.use(cookie())
+
 app.use(session({
   store: new mongoStore({
     mongoUrl: process.env.MONGO_URI,
@@ -45,6 +51,8 @@ app.use(session({
 
 }))
 
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 app.engine("handlebars", handlebars.engine());
@@ -59,6 +67,8 @@ app.use("/views/", viewsRouter);
 
 app.use("/api/users/", userRouter)
 app.use("/api/auth/", authRouter)
+app.use("/api/passportLocal", PassportLocalRouter)
+app.use("/api/github", GithubRouter)
 
 
 
