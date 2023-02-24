@@ -101,7 +101,7 @@ export async function updateCart(req, res) {
   try {
       const { products } = req.body;
       const { cartID } = req.params;
-      const updatedCart = await cartsServices.updateCart(cartID, products);
+      const updatedCart = await CartServices.updateCart(cartID, products);
       if (updatedCart) {
           res.status(200).json({
               success: true,
@@ -123,7 +123,7 @@ export async function updateQuantity(req, res) {
   try {
       const { cartID, productID} = req.params;
       const { quantity } = req.body;
-      const updatedCart = await cartsServices.updateQuantity(cartID, productID, Number(quantity));
+      const updatedCart = await CartServices.updateQuantity(cartID, productID, Number(quantity));
       if (updatedCart) {
           res.status(200).json({
               success: true,
