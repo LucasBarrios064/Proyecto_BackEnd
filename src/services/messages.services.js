@@ -1,4 +1,4 @@
-import {MessagesModel} from "./../dao/models/messages.models.js"
+import {MessagesModel} from "./../models/models/messages.models.js"
 
 // OBTENER MENSAJES
 export async function getMessages(){

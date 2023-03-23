@@ -1,6 +1,5 @@
 import * as AuthServices from "../services/auth.services.js";
-import * as UserServices from "../services/users.services.js";
-import {STATUS} from "../constants/constants.js"
+import * as UserServices from "../services/usersDAO/users.services.js";
 
 export async function login(req, res){
   try {

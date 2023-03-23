@@ -1,4 +1,4 @@
-import * as UserServices from "../services/users.services.js";
+import * as UserServices from "../services/usersDAO/users.services.js";
 import bcrypt from 'bcrypt'
 
 export async function login(email, password) {

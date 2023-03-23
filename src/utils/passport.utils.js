@@ -1,8 +1,8 @@
 import passport from "passport";
 import passportLocal from "passport-local";
-import { UserModel } from "../dao/models/users.models.js";
+import { UserModel } from "../models/models/users.models.js";
 import passportGithub from 'passport-github2'
-import * as UserService from "../services/users.services.js";
+import * as UserService from "../services/usersDAO/users.services.js";
 import * as AuthService from "../services/auth.services.js"
 import dotenv from 'dotenv'
 dotenv.config()

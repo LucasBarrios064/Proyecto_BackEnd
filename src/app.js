@@ -19,7 +19,7 @@ import passport from 'passport';
 import dotenv from "dotenv";
 import "./config/db.js"
 import * as MessageServices from "./services/messages.services.js"
-import * as ProductServices from "./services/products.services.js";
+import * as ProductServices from "./services/productsDAO/products.services.js";
 
 
 const app = express();

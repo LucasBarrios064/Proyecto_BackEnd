@@ -1,9 +1,10 @@
-import * as UserServices from "../services/users.services.js";
+import factory from "../services/factory.js";
 import {STATUS} from "../constants/constants.js"
+
 
 export async function createUser(req, res) {
   try {
-    const user = await UserServices.createUser(req.body);
+    const user = await factory.user.createUser(req.body);
     if (!user) {
       throw new Error("Usuario no creado");
     }
@@ -18,7 +19,7 @@ export async function createUser(req, res) {
 export async function getUser(req, res) {
     try {
       const { email } =  req.params;
-      const user = await UserServices.getUser(email);
+      const user = await factory.user.getUser(email);
       if (!user) {
         throw new Error("Usuario no encontrado");
       }
@@ -36,7 +37,7 @@ export async function getUser(req, res) {
     try {
       const { email } = req.params;
       const { body } = req;
-      const user = await UserServices.updateUser(email, body);
+      const user = await factory.user.updateUser(email, body);
       res.json({ user });
     } catch (error) {
       throw new Error(error.message);
@@ -47,7 +48,7 @@ export async function getUser(req, res) {
     try {
       const { email } = req.params;
       const { body } = req;
-      const user = await UserServices.updateUser(email, { password: body.password }, true);
+      const user = await factory.user.updateUser(email, { password: body.password }, true);
       res.json({ user });
     } catch (error) {
       throw new Error(error.message);

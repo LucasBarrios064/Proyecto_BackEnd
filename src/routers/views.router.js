@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { STATUS } from "../constants/constants.js";
-import * as ProductServices from "../services/products.services.js"
+import * as ProductServices from "../services/productsDAO/products.services.js"
 /* import ProductManager from "../ProductManager.js"; 
 
 const productManager3 = new ProductManager()  */
