@@ -111,6 +111,11 @@ class CartServices {
       throw new Error(error.message);
     }
   }
+
+  async purchase(idCart) {
+    try {
+    } catch (error) {}
+  }
 }
 
 const cartsServices = new CartServices();

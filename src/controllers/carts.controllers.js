@@ -148,3 +148,5 @@ export async function updateQuantity(req, res) {
   }
 }
 
+export async function purchase(req, res) {
+}

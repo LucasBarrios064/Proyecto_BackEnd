@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as ProductController from "../controllers/products.controllers.js";
+import { authAdmin } from "../middleware/authAdmin.middleware.js";
 
 const productsRouter = Router();
 
@@ -7,9 +8,9 @@ productsRouter.get("/", ProductController.getProducts);
 
 productsRouter.get("/:idProduct", ProductController.getProductById);
 
-productsRouter.post("/", ProductController.addProduct);
+productsRouter.post("/",authAdmin ,ProductController.addProduct);
 
-productsRouter.put("/:idProduct", ProductController.updateProduct);
+productsRouter.put("/:idProduct",authAdmin, ProductController.updateProduct);
 
 productsRouter.delete("/:idProduct", ProductController.deleteProduct);
 
