@@ -114,6 +114,17 @@ class CartServices {
 
   async purchase(idCart) {
     try {
+      const Cart = await CartModel.findById(idCart);
+      let cartArray = [];
+      let cartToPurchase = [];
+      cartArray.push(Cart);
+
+      cartArray.forEach((element) => {
+        if (element.quantity <= element.stock) {
+          cartToPurchase.push(element);
+        }
+      });
+      return cartToPurchase
     } catch (error) {}
   }
 }

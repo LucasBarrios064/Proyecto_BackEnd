@@ -49,4 +49,10 @@ export class CartRepository {
         const cartDTO = new CartDTO(cart)
         return cartDTO
     }
+
+    async purchase(idCart){
+        const cart = await this.dao.purchase(idCart)
+        const cartDTO = new CartDTO(cart)
+        return cartDTO
+    }
 }

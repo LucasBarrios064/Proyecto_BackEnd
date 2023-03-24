@@ -107,13 +107,13 @@ export async function updateCart(req, res) {
     const updatedCart = await factory.cart.updateCart(cartID, products);
     if (updatedCart) {
       res.status(200).json({
-        success: true,
+        success: STATUS.SUCCES,
         message: `Cart ${cartID} updated.`,
         data: updatedCart,
       });
     } else {
       res.status(404).json({
-        success: false,
+        success: STATUS.FAIL,
         message: `Cart ${cartID} not found.`,
       });
     }
@@ -133,13 +133,13 @@ export async function updateQuantity(req, res) {
     );
     if (updatedCart) {
       res.status(200).json({
-        success: true,
+        success: STATUS.SUCCES,
         message: `Product ${productID} quantity updated to ${quantity} in cart ${cartID}`,
         data: updatedCart,
       });
     } else {
       res.status(404).json({
-        success: false,
+        success: STATUS.FAIL,
         message: `Product ${productID} not found in cart ${cartID}. Or cart ${cartID} not found.`,
       });
     }
@@ -149,4 +149,24 @@ export async function updateQuantity(req, res) {
 }
 
 export async function purchase(req, res) {
+  try {
+    const { cartID } = req.params;
+    const cart = await factory.cart.purchase(cartID);
+    if(cart){
+      res.status(200).json({
+        success: STATUS.SUCCES,
+        message: `Compra Finalizada: ${cart}`,
+        data: cart,
+      });
+    
+    }
+    else {
+      res.status(404).json({
+        success: STATUS.FAIL,
+        message: `Ocurrio un error en su compra`,
+      });
+    }
+  } catch {
+    res.status(500).json({ Error: error.message });
+  }
 }

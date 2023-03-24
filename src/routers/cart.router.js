@@ -10,6 +10,7 @@ cartsRouter.post('/:cartID/product/:productID/:quantity',authUser, CartControlle
 cartsRouter.delete("/:idCart",authUser,CartController.deleteCartProducts)
 cartsRouter.put('/:cartID/',authUser, CartController.updateCart)
 cartsRouter.put('/:cartID/product/:productID',authUser, CartController.updateQuantity)
+cartsRouter.get("/current/:idCart",CartController.purchase)
 
 export { cartsRouter }
 
