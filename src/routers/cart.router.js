@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as CartController from "../controllers/carts.controllers.js"
+import { getGeneratedProducts } from "../faker.js";
 import { authUser } from "../middleware/authUser.middleware.js";
 
 const cartsRouter = Router();
@@ -11,6 +12,8 @@ cartsRouter.delete("/:idCart",authUser,CartController.deleteCartProducts)
 cartsRouter.put('/:cartID/',authUser, CartController.updateCart)
 cartsRouter.put('/:cartID/product/:productID',authUser, CartController.updateQuantity)
 cartsRouter.get("/current/:idCart",CartController.purchase)
+
+cartsRouter.get("/mockingproducts",getGeneratedProducts)
 
 export { cartsRouter }
 

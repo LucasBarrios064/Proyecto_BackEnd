@@ -20,6 +20,7 @@ import dotenv from "dotenv";
 import "./config/db.js"
 import * as MessageServices from "./services/messages.services.js"
 import * as ProductServices from "./services/productsDAO/products.services.js";
+import errorHandlerMiddleware from "./middleware/errorHandler.middleware.js";
 
 
 const app = express();
@@ -70,7 +71,7 @@ app.use("/api/auth/", authRouter)
 app.use("/api/passportLocal", PassportLocalRouter)
 app.use("/api/github", GithubRouter)
 
-
+app.use(errorHandlerMiddleware())
 
 const PORT = process.env.PORT || 8080
 const server = app.listen(PORT, () => console.log(`🚀 Server started on port http://localhost:${PORT}`))

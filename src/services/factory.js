@@ -15,7 +15,7 @@ switch (config.persistencia) {
     const { default: userMongo } = await import(
       "../services/usersDAO/users.services.js"
     );
-    const { default: cartMongo } = await import("../services/auth.services.js");
+    const { default: cartMongo } = await import("./cartsDAO/carts.services.js");
     const { default: productMongo } = await import(
       "../services/productsDAO/products.services.js"
     );
