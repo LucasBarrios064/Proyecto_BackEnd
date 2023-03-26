@@ -24,4 +24,10 @@ export class UserRepository{
         return userDTO
     }
 
+    async getUserByCart(cartID) {
+        const user = await this.dao.getUserByCart(cartID)
+        const userDTO = new UserDTO(user)
+        return userDTO
+    }
+
 }

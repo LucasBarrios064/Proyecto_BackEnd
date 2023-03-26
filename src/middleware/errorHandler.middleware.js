@@ -1,7 +1,7 @@
 export default (error, req, res, next) => {
   console.log(
     "Message: ",
-    error.messsage,
+    error.message,
     "Path: ",
     req.path,
     "Data: ",

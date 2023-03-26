@@ -152,15 +152,15 @@ export async function purchase(req, res) {
   try {
     const { cartID } = req.params;
     const cart = await factory.cart.purchase(cartID);
-    if(cart){
+    const email = await factory.user.getUserByCart(cartID);
+    const ticket = await factory.ticket.createTicket(cartID, email);
+    if (ticket) {
       res.status(200).json({
         success: STATUS.SUCCES,
-        message: `Compra Finalizada: ${cart}`,
+        message: `Compra Finalizada: ${ticket}`,
         data: cart,
       });
-    
-    }
-    else {
+    } else {
       res.status(404).json({
         success: STATUS.FAIL,
         message: `Ocurrio un error en su compra`,

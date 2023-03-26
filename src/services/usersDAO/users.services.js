@@ -30,6 +30,16 @@ class userServices {
       throw new Error(error.message);
     }
   }
+
+  async getUserByCart(cartID) {
+    try {
+      const user = await UserModel.find({ cart: cartID }).lean();
+      let userfound = user[0];
+      return userfound;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
   async updateUser(email, data, updatePassword = false) {
     try {
       const user = await getUser(email);
@@ -57,5 +67,5 @@ class userServices {
   }
 }
 
-const UserServices = new userServices()
-export default UserServices
+const UserServices = new userServices();
+export default UserServices;

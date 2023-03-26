@@ -71,7 +71,7 @@ app.use("/api/auth/", authRouter)
 app.use("/api/passportLocal", PassportLocalRouter)
 app.use("/api/github", GithubRouter)
 
-app.use(errorHandlerMiddleware())
+app.use(errorHandlerMiddleware)
 
 const PORT = process.env.PORT || 8080
 const server = app.listen(PORT, () => console.log(`🚀 Server started on port http://localhost:${PORT}`))

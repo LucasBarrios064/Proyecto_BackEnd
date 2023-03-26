@@ -4,6 +4,7 @@ import { PERSISTENCIA } from "../constants/constants.js";
 import { UserRepository } from "./usersDAO/users.repository.js";
 import { ProductRepository } from "./productsDAO/products.repository.js";
 import { CartRepository } from "./cartsDAO/carts.repository.js";
+import { ticketRepository } from "./ticketDAO/ticket.repository.js";
 
 let factory;
 switch (config.persistencia) {
@@ -11,7 +12,7 @@ switch (config.persistencia) {
     console.log("🧨 Persistencia MONGO");
 
     await import("../config/db.js");
-    
+
     const { default: userMongo } = await import(
       "../services/usersDAO/users.services.js"
     );
@@ -19,11 +20,15 @@ switch (config.persistencia) {
     const { default: productMongo } = await import(
       "../services/productsDAO/products.services.js"
     );
+    const { default: ticketMongo } = await import(
+      "./ticketDAO/ticket.services.js"
+    );
 
     factory = {
       user: new UserRepository(userMongo),
       cart: new CartRepository(cartMongo),
       product: new ProductRepository(productMongo),
+      ticket: new ticketRepository(ticketMongo),
     };
     break;
 
