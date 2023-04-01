@@ -1,4 +1,5 @@
 import fs from "fs";
+import logger from "../utils/logger.js"
 
 export default class ProductManager {
   constructor() {
@@ -26,17 +27,17 @@ export default class ProductManager {
 
       let productadd = this.#getTitle(title);
       if (productadd) {
-        console.log(` El producto (${title}) ya se encuentra en el arreglo`);
+        logger.info(` El producto (${title}) ya se encuentra en el arreglo`);
       } else {
         if ((title, description, price, thumbnail, stock, category)) {
           this.products.push(product);
         } else {
-          console.log("Falta ingresar datos");
+          logger.warn("Falta ingresar datos");
         }
       }
       fs.writeFileSync(this.path, JSON.stringify(this.products, "utf-8"));
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       throw new Error(error);
     }
   }
@@ -46,7 +47,7 @@ export default class ProductManager {
       this.#leerProductos();
       return this.products;
     } catch {
-      console.log(error);
+      logger.error(error);
       throw new Error(error);
     }
   }
@@ -56,13 +57,13 @@ export default class ProductManager {
       this.#leerProductos();
       const product = this.#getId(idProduct);
       if (product) {
-        console.log(product);
+        logger.info(product);
         return product;
       } else {
-        console.log("Not Found");
+        logger.warn("Not Found");
       }
     } catch {
-      console.log(error);
+      logger.error(error);
       throw new Error(error);
     }
   }

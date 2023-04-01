@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import logger from "./utils/logger.js"
 faker.locale = "es";
 
 function generateProducts() {
@@ -19,5 +20,5 @@ export async function getGeneratedProducts(){
  for (let i = 0; i < 100; i++) {
    products.push(generateProducts());
  }
- console.log(products)
+ logger.info(products)
 }

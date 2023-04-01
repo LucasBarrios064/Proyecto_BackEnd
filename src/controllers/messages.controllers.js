@@ -1,5 +1,6 @@
 import * as MessagesServices from "../services/carts.services.js"
 import { STATUS } from "../constants/constants.js"
+import logger from "../utils/logger.js"
 
 export async function getMessages(req, res){
     try {
@@ -20,7 +21,7 @@ export async function addMessages(req,res){
     try {
         const {body} = req
         const response = await MessagesServices.addMessages(body)
-        console.log("body de addMessage de controller: ", body)
+        logger.info("body de addMessage de controller: ", body)
         res.json({
             message: response,
             status: STATUS.SUCCES

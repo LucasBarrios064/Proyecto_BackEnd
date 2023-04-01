@@ -1,4 +1,5 @@
 import fs from "fs";
+import logger from "../utils/logger.js"
 
 export class CartManager {
   constructor() {
@@ -31,7 +32,7 @@ export class CartManager {
 
   getCart() {
     this.#getCart();
-    console.log(this.cart);
+    logger.info(this.cart);
     return this.cart;
   }
 
@@ -39,10 +40,10 @@ export class CartManager {
     this.#getCart();
     const cart = this.#getId(idCart);
     if (cart) {
-      console.log(cart);
+      logger.info(cart);
       return cart;
     } else {
-      console.log("No Cart Found");
+      logger.info("No Cart Found");
     }
   }
 

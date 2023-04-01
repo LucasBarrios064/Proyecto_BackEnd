@@ -5,11 +5,12 @@ import { UserRepository } from "./usersDAO/users.repository.js";
 import { ProductRepository } from "./productsDAO/products.repository.js";
 import { CartRepository } from "./cartsDAO/carts.repository.js";
 import { ticketRepository } from "./ticketDAO/ticket.repository.js";
+import logger from "../utils/logger.js"
 
 let factory;
 switch (config.persistencia) {
   case PERSISTENCIA.MONGO:
-    console.log("🧨 Persistencia MONGO");
+    logger.debug("🧨 Persistencia MONGO");
 
     await import("../config/db.js");
 
@@ -33,11 +34,11 @@ switch (config.persistencia) {
     break;
 
   case PERSISTENCIA.FILE:
-    console.log("🧨 Persistencia FILE SYSTEM");
+    logger.debug("🧨 Persistencia FILE SYSTEM");
     break;
 
   case PERSISTENCIA.MEMORY:
-    console.log("🧨 Persistencia MEMORY");
+    logger.debug("🧨 Persistencia MEMORY");
     break;
 }
 

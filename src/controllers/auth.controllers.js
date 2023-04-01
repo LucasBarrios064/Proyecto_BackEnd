@@ -1,5 +1,6 @@
 import * as AuthServices from "../services/auth.services.js";
 import * as UserServices from "../services/usersDAO/users.services.js";
+import logger from "../utils/logger.js"
 
 export async function login(req, res){
   try {
@@ -9,7 +10,7 @@ export async function login(req, res){
           req.session.logged = true
           const userLogged = await UserServices.getUser(email)
           delete userLogged.password
-          console.log("Usuario ingresado", userLogged)
+          logger.info("Usuario ingresado", userLogged)
           req.session.userLogged = userLogged
           res.redirect("/views/realtimeproducts")
       }else{
@@ -27,7 +28,7 @@ export async function logout(req, res) {
       if (err) {
         res.json(err);
       } else {
-        console.log("Usuario salió de la aplicación");
+        logger.info("Usuario salió de la aplicación");
         res.redirect("/views/");
       }
     });

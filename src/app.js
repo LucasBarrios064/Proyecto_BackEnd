@@ -20,7 +20,9 @@ import dotenv from "dotenv";
 import "./config/db.js"
 import * as MessageServices from "./services/messages.services.js"
 import * as ProductServices from "./services/productsDAO/products.services.js";
+
 import errorHandlerMiddleware from "./middleware/errorHandler.middleware.js";
+import loggerMiddleware from "./middleware/logger.middleware.js";
 
 
 const app = express();
@@ -73,13 +75,24 @@ app.use("/api/github", GithubRouter)
 
 app.use(errorHandlerMiddleware)
 
+app.use(loggerMiddleware)
+
+
 const PORT = process.env.PORT || 8080
 const server = app.listen(PORT, () => console.log(`🚀 Server started on port http://localhost:${PORT}`))
 server.on('error', (err) => console.log(err));
 
 
-
-
+import logger from "./utils/logger.js";
+app.get("/loggerTest", (req, res) => {
+	logger.debug("Logger Mensaje (debug)");
+	logger.http("Logger Mensaje (http)");
+	logger.info("Logger Mensaje (info)");
+	logger.warning("Logger Mensaje (warnign)");
+	logger.error("Logger Mensaje (error)");
+	logger.fatal("Logger Mensaje (fatal)");
+  res.send("Todos");
+});
 
 
 const socketServer = new Server(server);

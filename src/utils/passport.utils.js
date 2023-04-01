@@ -5,15 +5,16 @@ import passportGithub from 'passport-github2'
 import * as UserService from "../services/usersDAO/users.services.js";
 import * as AuthService from "../services/auth.services.js"
 import dotenv from 'dotenv'
+import logger from "../utils/logger.js"
 dotenv.config()
 
 passport.serializeUser(function (user, done) {
-  console.log("Serializing");
+  logger.debug("Serializing");
   done(null, user._id);
 });
 
 passport.deserializeUser(function (_id, done) {
-  console.log("Deserializing");
+  logger.debug("Deserializing");
   UserModel.findById(_id, function (err, user) {
     done(err, user);
   });
@@ -61,7 +62,7 @@ passport.use('github', new passportGithub.Strategy({
   callbackURL:'http://localhost:8080/api/github/callback'
 }, async function (accessToken, refreshToken, profile, done) {
   try {
-    console.log(profile)
+    logger.debug(profile)
     const newUser = {
       first_name: profile.displayName,
       last_name: profile.displayName,
@@ -82,7 +83,7 @@ passport.use('githubLogin', new passportGithub.Strategy({
   callbackURL:'http://localhost:8080/api/github/callback'
 }, async function (accessToken, refreshToken, profile, done) {
   try {
-    console.log(profile)
+    logger.debug(profile)
     const user = await UserModel.findOne({ email: profile._json.email})
     done(null,user)
   } catch (error) {

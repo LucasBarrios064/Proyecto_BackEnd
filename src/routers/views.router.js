@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { STATUS } from "../constants/constants.js";
 import * as ProductServices from "../services/productsDAO/products.services.js"
+import logger from "../utils/logger.js"
 /* import ProductManager from "../ProductManager.js"; 
 
 const productManager3 = new ProductManager()  */
@@ -40,7 +41,7 @@ viewsRouter.get("/realtimeproducts", async (req, res) => {
       lean: true
   }
   try {
-      console.log(options.page, options.limit)
+      logger.info(options.page, options.limit)
       const response = await ProductServices.getProducts(options)
       
       res.render("realTimeProducts", {userLogged, ...response });
@@ -56,7 +57,7 @@ viewsRouter.get("/realtimeproducts", async (req, res) => {
 
 
 viewsRouter.get("/chat", (req, res) => {
-  console.log("views router esta funcionando");
+  logger.info("views router esta funcionando");
 
   res.render("chat");
 });

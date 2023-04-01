@@ -1,6 +1,6 @@
 import factory from "../services/factory.js"
 import {STATUS} from "../constants/constants.js"
-
+import logger from "../utils/logger.js"
 
 export async function getProducts(req, res){
     const {limit,page} = req.query
@@ -20,7 +20,7 @@ export async function getProducts(req, res){
     }
     
     try {
-        console.log(options.page, options.limit)
+        logger.info(options.page, options.limit)
         const response = await factory.product.getProducts(options)
        
         res.json({

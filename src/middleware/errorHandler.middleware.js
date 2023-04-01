@@ -1,5 +1,7 @@
+import logger from "../utils/logger.js"
+
 export default (error, req, res, next) => {
-  console.log(
+  logger.info(
     "Message: ",
     error.message,
     "Path: ",
