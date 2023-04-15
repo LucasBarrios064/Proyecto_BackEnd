@@ -37,8 +37,8 @@ productsRouter.get("/", (req, res) => {
 productsRouter.get("/:pid", (req, res) => {
   const { pid } = req.params;
   const id = parseInt(pid);
-  let productID = productManager2.getProductsById(id);
-  res.json(productID);
+  let idProduct = productManager2.getProductsById(id);
+  res.json(idProduct);
 });
 
 productsRouter.post("/", async (req, res) => {

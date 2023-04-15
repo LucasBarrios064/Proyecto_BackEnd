@@ -7,11 +7,11 @@ const cartsRouter = Router();
 cartsRouter.get("/", CartController.getCart)
 cartsRouter.get("/:idCart",CartController.getCartById)
 cartsRouter.post("/",CartController.addCart)
-cartsRouter.post('/:cartID/product/:productID/:quantity',authUser, CartController.addProductToCart)
+cartsRouter.post('/:idCart/product/:idProduct/:quantity',authUser, CartController.addProductToCart)
 cartsRouter.delete("/:idCart",authUser,CartController.deleteCartProducts)
-cartsRouter.put('/:cartID/',authUser, CartController.updateCart)
-cartsRouter.put('/:cartID/product/:productID',authUser, CartController.updateQuantity)
-cartsRouter.get("/current/:idCart",CartController.purchase)
+cartsRouter.put("/:idCart",authUser, CartController.updateCart)
+cartsRouter.put('/:idCart/product/:idProduct',authUser, CartController.updateQuantity)
+cartsRouter.post("/current/:idCart",CartController.purchase)
 
 cartsRouter.get("/mockingproducts",getGeneratedProducts)
 
@@ -35,20 +35,20 @@ cartsRouter.post("/", (req, res) => {
 cartsRouter.post("/:cid/product/:pid", (req, res) => {
   const { cid, pid } = req.params;
 
-  let cartId = parseInt(cid);
-  let productId = parseInt(pid);
+  let idCart = parseInt(cid);
+  let idProduct = parseInt(pid);
 
   let productToAdd = {
-    id: productId,
+    id: idProduct,
     quantity: 1,
   };
 
   let found = false;
 
-  let productsInCart = cartManager.getCartById(cartId).products;
+  let productsInCart = cartManager.getCartById(idCart).products;
 
   productsInCart.forEach((obj) => {
-    if (obj.id === productId) {
+    if (obj.id === idProduct) {
       obj.quantity += 1;
       found = true;
     }
@@ -58,7 +58,7 @@ cartsRouter.post("/:cid/product/:pid", (req, res) => {
     productsInCart.push(productToAdd);
   }
 
-  cartManager.updateCart(cartId, productsInCart);
+  cartManager.updateCart(idCart, productsInCart);
   res.send(productsInCart);
 });
 

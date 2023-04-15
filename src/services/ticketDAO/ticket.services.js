@@ -4,9 +4,9 @@ const { default: cartsServices } = await import(
 );
 
 class ticketServices {
-  async createTicket(cartID, email) {
+  async createTicket(idCart, email) {
     try {
-      const cart = await cartsServices.getCart(cartID);
+      const cart = await cartsServices.getCart(idCart);
       let amount = 0;
       cart.products.forEach((product) => {
         let price = product.quantity * product._id.price;

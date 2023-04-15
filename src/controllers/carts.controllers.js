@@ -53,7 +53,7 @@ export async function addCart(req, res) {
 
 export async function addProductToCart(req, res) {
   try {
-    const { cartID, productID, quantity } = req.params;
+    const { idCart, idProduct, quantity } = req.params;
 
     if (quantity <= 0) {
       res.status(400).json({
@@ -63,20 +63,20 @@ export async function addProductToCart(req, res) {
     }
 
     const cart = await factory.cart.addProductToCart(
-      cartID,
-      productID,
+      idCart,
+      idProduct,
       Number(quantity)
     );
     if (cart) {
       res.status(200).json({
         success: true,
-        message: `Product ${productID} added to cart ${cart._id}`,
+        message: `Product ${idProduct} added to cart ${cart._id}`,
         data: cart,
       });
     } else {
       res.status(404).json({
         success: false,
-        message: `Product ${productID} not found.`,
+        message: `Product ${idProduct} not found.`,
       });
     }
   } catch (error) {
@@ -103,18 +103,18 @@ export async function deleteCartProducts(req, res) {
 export async function updateCart(req, res) {
   try {
     const { products } = req.body;
-    const { cartID } = req.params;
-    const updatedCart = await factory.cart.updateCart(cartID, products);
+    const { idCart } = req.params;
+    const updatedCart = await factory.cart.updateCart(idCart, products);
     if (updatedCart) {
       res.status(200).json({
         success: STATUS.SUCCES,
-        message: `Cart ${cartID} updated.`,
+        message: `Cart ${idCart} updated.`,
         data: updatedCart,
       });
     } else {
       res.status(404).json({
         success: STATUS.FAIL,
-        message: `Cart ${cartID} not found.`,
+        message: `Cart ${idCart} not found.`,
       });
     }
   } catch (error) {
@@ -124,23 +124,23 @@ export async function updateCart(req, res) {
 
 export async function updateQuantity(req, res) {
   try {
-    const { cartID, productID } = req.params;
+    const { idCart, idProduct } = req.params;
     const { quantity } = req.body;
     const updatedCart = await factory.cart.updateQuantity(
-      cartID,
-      productID,
+      idCart,
+      idProduct,
       Number(quantity)
     );
     if (updatedCart) {
       res.status(200).json({
         success: STATUS.SUCCES,
-        message: `Product ${productID} quantity updated to ${quantity} in cart ${cartID}`,
+        message: `Product ${idProduct} quantity updated to ${quantity} in cart ${idCart}`,
         data: updatedCart,
       });
     } else {
       res.status(404).json({
         success: STATUS.FAIL,
-        message: `Product ${productID} not found in cart ${cartID}. Or cart ${cartID} not found.`,
+        message: `Product ${idProduct} not found in cart ${idCart}. Or cart ${idCart} not found.`,
       });
     }
   } catch (error) {
@@ -150,10 +150,10 @@ export async function updateQuantity(req, res) {
 
 export async function purchase(req, res) {
   try {
-    const { cartID } = req.params;
-    const cart = await factory.cart.purchase(cartID);
-    const email = await factory.user.getUserByCart(cartID);
-    const ticket = await factory.ticket.createTicket(cartID, email);
+    const { idCart } = req.params;
+    const cart = await factory.cart.purchase(idCart);
+    const email = await factory.user.getUserByCart(idCart);
+    const ticket = await factory.ticket.createTicket(idCart, email);
     if (ticket) {
       res.status(200).json({
         success: STATUS.SUCCES,

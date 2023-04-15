@@ -31,9 +31,9 @@ class userServices {
     }
   }
 
-  async getUserByCart(cartID) {
+  async getUserByCart(idCart) {
     try {
-      const user = await UserModel.find({ cart: cartID }).lean();
+      const user = await UserModel.find({ cart: idCart }).lean();
       let userfound = user[0];
       return userfound;
     } catch (error) {

@@ -5,8 +5,8 @@ export class ticketRepository {
     this.dao = dao;
   }
 
-  async createTicket(cartID, email) {
-    const ticket = await this.dao.createticket(cartID, email);
+  async createTicket(idCart, email) {
+    const ticket = await this.dao.createticket(idCart, email);
     const ticketDTO = new TicketDTO(ticket);
     return ticketDTO;
   }

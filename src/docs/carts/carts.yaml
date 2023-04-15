@@ -1,0 +1,268 @@
+paths:
+  /api/carts/:
+    get:
+      summary: Obtener los carritos de la base de datos
+      tags:
+       - Cart
+      responses:
+        "200":
+          description: Se obtuvieron los carritos.
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schema/Cart'
+        "400":
+          description: Bad request
+        "500":
+          description: Server Error
+
+    post:
+      summary: Crear un carrito vacio
+      tags:
+        - Cart
+      responses:
+        "200":
+         description: Se Creo el carrito.
+         content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        "400":
+          description: Bad request
+        "500":
+          description: Server Error
+
+  /api/carts/{idCart}:
+
+    get:
+      summary: Obtener carrito mediante su id
+      parameters:
+      - name: idCart
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: string
+      tags:
+        - Cart
+      responses:
+        "200":
+         description: Se encontro el carrrito 
+         content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        "400":
+          description: Bad request
+        "500":
+          description: Server Error
+      
+    delete:
+      summary: Eliminar todos los productos del carrito
+      parameters:
+      - name: idCart
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: string
+      tags:
+        - Cart
+      responses:
+        "200":
+         description: El carrito fue eliminado.
+         content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        "400":
+          description: Bad request
+        "500":
+          description: Server Error
+
+    put:
+      summary: Actualizar los productos del carrito
+      parameters:
+      - name: idCart
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateCart'
+      tags:
+        - Cart
+      responses: 
+        "200":
+         description: El cart se actualizó correctamente
+         content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        "400":
+          description: Bad request
+        "500":
+          description: Server Error     
+
+  /api/carts/{idCart}/products/{idProduct}/{quantity}:     
+    post:
+      summary: Agregar productos al carrito
+      parameters:
+      - name: idCart
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: string
+      - name: idProduct
+        in: path
+        required: true
+        description: id del producto
+        schema:
+          $type: string
+      - name: quantity
+        in: path
+        required: true
+        description: cantidad de producto para agregar
+        schema:
+          $type: string
+      tags:
+        - Cart
+      responses:
+        "200":
+         description: Se agregaron correctamente los productos
+         content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+        "400":
+          description: Bad request
+        "500":
+          description: Server Error     
+
+  /api/carts/{idCart}/products/{idProduct}:  
+    put:
+      summary: Actualizar la cantidad de un producto en el carrito.
+      parameters:
+      - name: idCart
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: string
+      - name: idProduct
+        in: path
+        required: true
+        description: id del producto
+        schema:
+          $type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updateCartProduct'
+      tags:
+        - Cart
+      responses:
+        "200":
+         description: La cantidad del producto en el carrito fue actualizada
+         content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'   
+        "400":
+          description: Bad request
+        "500":
+          description: Server Error
+
+  /api/carts/current/{idCart}:
+    post:
+      summary: Finalizar compra.
+      parameters:
+      - name: idCart
+        in: path
+        required: true
+        description: id del carrito
+        schema:
+          $type: string
+      tags:
+        - Cart
+      responses:
+        "200":
+         description: Se finalizó la compra
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Cart'
+        "400":
+          description: Bad request
+        "500":
+          description: Server Error
+
+
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id del carrito
+        products:
+          type: Array
+          description: Contiene cantidad, id e informacion sobre los productos
+        timestamps:
+          type: String
+          description: "Contiene fecha de creacion y de cambios"
+      example:
+      _id: ObjectId(63dd5f5ed4e894f9c234de40)
+      products:
+        [
+        {_id: ObjectId("63dd5f5ed4e894f9c234de40"), product: ObjectId("63cee251293d83504ec8cfa1"), quantity: 5},
+        {_id: ObjectId("63dd5f5ed4e894f9c234de40"), product: ObjectId("63cee251293d83504ec8cfa1"), quantity: 3}
+        ]
+
+    requestBodies:
+      updateCart:
+        type: Object
+        properties:
+          product:
+            type: String
+            description: "id del producto a agregar"
+          quantity: 
+            type: Number
+            description: Cantidad del producto a agregar
+        example:
+          product: "63cee251293d83504ec8cfa1"
+          quantity: 6
+      
+    updateCartProduct:
+      type: Object
+      properties:
+        quantity:
+          type: Number
+          description: Cantidad de producto que va a actualizarse
+      example:
+        quantity: 8
